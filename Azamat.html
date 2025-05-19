@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="kk" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кәсіби Веб-сайт Жасау Қызметтері</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+    <script src="animations.js" defer></script>
+    <style>
+        /* Негізгі стильдер */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Ашық сұр фон */
+            color: #1f2937; /* Қою сұр мәтін */
+            overflow-x: hidden; /* Көлденең айналдыруды болдырмау */
+        }
+        /* Anchor сілтемелері үшін бірқалыпты айналдыру */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Реттелетін айналдыру жолағы (міндетті емес) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Белсенді навигация сілтемесінің стилі */
+        .nav-link-active {
+            color: #3b82f6; /* Көк-500 */
+            font-weight: 600;
+        }
+        /* Анимациялар үшін қосымша стильдер */
+        .fade-in {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .parallax {
+            transition: transform 0.5s ease-out;
+        }
+        .hover-effect {
+            transition: transform 0.3s ease;
+        }
+        .animate-text span {
+            display: inline-block;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Мобильді мәзір стильдері */
+        @media (max-width: 768px) {
+            #mobile-menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                transform: translateY(-100%);
+                transition: transform 0.3s ease-in-out;
+                z-index: 40;
+            }
+            #mobile-menu.active {
+                transform: translateY(0);
+            }
+            .nav-item-mobile {
+                padding: 1rem;
+                border-bottom: 1px solid #e5e7eb;
+                font-size: 1.1rem;
+            }
+            .nav-item-mobile:last-child {
+                border-bottom: none;
+            }
+        }
+        /* Мобильді көрініс үшін элементтердің өлшемдері */
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem !important;
+                line-height: 1.2 !important;
+            }
+            h2 {
+                font-size: 1.75rem !important;
+            }
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .section-padding {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+            #whatsapp-widget {
+                width: 44px;
+                height: 44px;
+                bottom: 16px;
+                right: 16px;
+            }
+            #whatsapp-widget img {
+                width: 24px;
+                height: 24px;
+            }
+        }
+        /* Мобильді құрылғылардағы анимацияларды оңтайландыру */
+        @media (prefers-reduced-motion: reduce) {
+            .fade-in, .parallax, .hover-effect, .animate-text span {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+        #whatsapp-widget {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 100;
+            width: 56px;
+            height: 56px;
+            background: #25d366;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            visibility: hidden;
+        }
+
+        #whatsapp-widget.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        #whatsapp-widget:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            background: #1ebe57;
+            transform: scale(1.1);
+        }
+
+        #whatsapp-widget img {
+            width: 32px;
+            height: 32px;
+            filter: invert(1);
+        }
+
+        #whatsapp-notification {
+            position: fixed;
+            bottom: 90px;
+            right: 24px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            z-index: 100;
+            max-width: 300px;
+            opacity: 0;
+            transform: translateY(20px);
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        #whatsapp-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .notification-close {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            cursor: pointer;
+            color: #666;
+        }
+        /* Заманауи анимациялар */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            animation: slideInLeft 1s forwards;
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            animation: slideInRight 1s forwards;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .btn-animate {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-animate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.08);
+        }
+
+        .btn-animate::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -100%;
+            background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+            transition: all 0.6s;
+        }
+
+        .btn-animate:hover::after {
+            left: 100%;
+        }
+
+        /* FAQ бөлімінің стильдері */
+        .faq-item {
+            border-radius: 14px;
+            box-shadow: 0 2px 8px rgba(59,130,246,0.06);
+            background: #fff;
+            margin-bottom: 12px;
+            transition: box-shadow 0.3s, background 0.3s;
+            border: 1px solid #e5e7eb;
+        }
+        .faq-item.active {
+            background: #f0f7ff;
+            box-shadow: 0 4px 16px rgba(59,130,246,0.10);
+            border-color: #3b82f6;
+        }
+        .faq-question {
+            position: relative;
+            padding: 22px 56px 22px 24px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #2563eb;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+        .faq-item.active .faq-question {
+            color: #1d4ed8;
+        }
+        .faq-question::after {
+            content: '+';
+            position: absolute;
+            right: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            color: #3b82f6;
+            font-weight: 700;
+            transition: transform 0.3s, color 0.3s, content 0.3s;
+        }
+        .faq-item.active .faq-question::after {
+            content: '–';
+            color: #1d4ed8;
+            transform: translateY(-50%) rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            background: transparent;
+            transition: max-height 0.4s cubic-bezier(.4,0,.2,1), padding 0.3s, background 0.3s;
+            padding: 0 24px;
+            color: #374151;
+            font-size: 1rem;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 0 24px 18px 24px;
+            background: #f0f7ff;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl sm:text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors">Пердеев Азамат</a>
+            <div class="space-x-4 hidden md:flex">
+                <a href="#about" class="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-md nav-item">Мен туралы</a>
+                <a href="#services" class="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-md nav-item">Қызметтер</a>
+                <a href="#projects" class="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-md nav-item">Жобалар</a>
+                <a href="#contact" class="text-gray-600 hover:text-blue-600 transition-colors px-3 py-2 rounded-md nav-item">Байланыс</a>
+                <a href="#contact" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Тапсырыс Беру</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none p-2">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg">
+            <a href="#about" class="block text-gray-600 hover:text-blue-600 transition-colors px-6 py-4 nav-item-mobile">Мен туралы</a>
+            <a href="#services" class="block text-gray-600 hover:text-blue-600 transition-colors px-6 py-4 nav-item-mobile">Қызметтер</a>
+            <a href="#projects" class="block text-gray-600 hover:text-blue-600 transition-colors px-6 py-4 nav-item-mobile">Жобалар</a>
+            <a href="#contact" class="block text-gray-600 hover:text-blue-600 transition-colors px-6 py-4 nav-item-mobile">Байланыс</a>
+            <a href="#contact" class="block bg-blue-600 text-white text-center mx-6 my-4 px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors shadow-sm">Тапсырыс Беру</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-8">
+
+        <section id="hero" class="min-h-[calc(100vh-120px)] flex flex-col md:flex-row items-center justify-center py-12 md:py-20 text-center md:text-left">
+            <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10 fade-in">
+                <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-800 mb-4 leading-tight animate-text">
+                    Кәсіби Веб-сайттар<br>Сіздің Бизнесіңіз Үшін
+                </h1>
+                <p class="text-base sm:text-lg md:text-2xl text-gray-600 mb-6 fade-in">
+                    Мен заманауи, жылдам жүктелетін және сатуға бағытталған веб-сайттар жасаймын. Сіздің идеяңызды жүзеге асырайық!
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#projects" class="w-full sm:w-auto inline-block bg-blue-600 text-white text-base sm:text-lg font-semibold px-6 sm:px-8 py-3 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 shadow-md hover-effect">Менің Жобаларым</a>
+                    <a href="#contact" class="w-full sm:w-auto inline-block bg-gray-700 text-white text-base sm:text-lg font-semibold px-6 sm:px-8 py-3 rounded-lg hover:bg-gray-800 transition-transform transform hover:scale-105 shadow-md hover-effect">Тегін Кеңес Алу</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center mt-8 md:mt-0 parallax" data-speed="0.3">
+                <img src="C:\Users\azama\Desktop\Новая папка (2)/сайт үлгі.png" alt="Веб-сайт жасаушы" class="rounded-lg shadow-2xl w-full max-w-[300px] sm:max-w-md object-cover border-4 border-white hover-effect">
+            </div>
+        </section>
+
+        <section id="special-offer" class="my-8 sm:my-12 flex justify-center">
+            <div class="w-full max-w-2xl bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-2xl shadow-lg p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-4 fade-in hover-effect" style="overflow:hidden;">
+                <div class="flex-shrink-0 flex items-center justify-center w-16 h-16 rounded-full bg-green-100 animate-pulse">
+                    <svg width="36" height="36" fill="none" viewBox="0 0 24 24"><path fill="#10b981" d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.3 7.3-5 5a1 1 0 0 1-1.4 0l-2-2a1 1 0 1 1 1.4-1.4l1.3 1.3 4.3-4.3a1 1 0 1 1 1.4 1.4Z"/></svg>
+                </div>
+                <div class="flex-1 text-center sm:text-left">
+                    <h3 class="text-2xl font-bold text-green-700 mb-1 animate-text">Арнайы ұсыныс!</h3>
+                    <p class="text-lg text-gray-700 mb-2">Бірінші тапсырысқа <span class="font-semibold text-blue-600">10% жеңілдік</span> немесе <span class="font-semibold text-green-600">тегін аудит</span> алыңыз!</p>
+                    <p class="text-sm text-gray-500 mb-3">Ұсыныс шектеулі уақытқа ғана жарамды.</p>
+                    <a href="#contact" class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-green-700 transition btn-animate">Тапсырыс беру</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="py-16 md:py-24 bg-white rounded-xl shadow-lg my-12 fade-in">
+            <div class="max-w-4xl mx-auto px-6">
+                <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12 animate-text">Мен Туралы</h2>
+                <div class="text-lg text-gray-700 space-y-6 leading-relaxed text-center md:text-left">
+                    <p class="fade-in">
+                        Сәлем! Мен Пердеев Азамат, веб-әзірлеу саласында бірнеше жылдық тәжірибесі бар маманмын. Менің мақсатым – әрбір клиент үшін олардың бизнесінің ерекшеліктерін ескере отырып, тиімді және тартымды веб-шешімдер жасау.
+                    </p>
+                    <p class="fade-in">
+                        Мен әр жобаға үлкен жауапкершілікпен қараймын және сапалы нәтижеге жету үшін заманауи технологиялар мен үздік тәжірибелерді қолданамын. Сіздің бизнесіңіздің онлайн кеңістікте табысты болуына көмектесуге дайынмын.
+                    </p>
+                    <p class="fade-in">
+                        Менің негізгі ұстанымым – клиентпен тығыз байланыста жұмыс істеу, оның қажеттіліктерін терең түсіну және күткенінен де асып түсетін нәтиже ұсыну.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="py-16 md:py-24">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Менің Қызметтерім</h2>
+            <p class="text-xl text-center text-gray-600 mb-12">Tilda арқылы немесе Node.js арқылы кез келген сайтты сіз қалаған бойынша жасаймыз. Кез келген бизнес немесе жеке бренд үшін де қызмет көрсетеміз.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                        <div class="text-blue-600 mb-4 text-5xl"><i class="fas fa-file-alt"></i></div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Лендинг Беттер</h3>
+                        <p class="text-gray-600 leading-relaxed">Белгілі бір өнімді немесе қызметті тиімді таныстыруға және сатуға арналған бір беттік сайттар.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                        <div class="text-blue-600 mb-4 text-5xl"><i class="fas fa-briefcase"></i></div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Корпоративтік Сайттар</h3>
+                        <p class="text-gray-600 leading-relaxed">Компанияңыздың имиджін қалыптастыратын, қызметтеріңіз бен артықшылықтарыңыз туралы толық ақпарат беретін сайттар.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                        <div class="text-blue-600 mb-4 text-5xl"><i class="fas fa-shopping-cart"></i></div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Интернет-Дүкендер</h3>
+                        <p class="text-gray-600 leading-relaxed">Тауарларыңызды онлайн сатуға арналған, төлем жүйелерімен интеграцияланған толыққанды электрондық коммерция платформалары.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                        <div class="text-blue-600 mb-4 text-5xl"><i class="fas fa-palette"></i></div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Портфолио Сайттары</h3>
+                        <p class="text-gray-600 leading-relaxed">Шығармашылық мамандар мен фрилансерлерге арналған, жұмыстарыңызды әсерлі түрде көрсететін сайттар.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                        <div class="text-blue-600 mb-4 text-5xl"><i class="fas fa-mobile-alt"></i></div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">Бейімделгіш Дизайн</h3>
+                        <p class="text-gray-600 leading-relaxed">Сайттарыңыз барлық құрылғыларда (компьютер, планшет, смартфон) мінсіз көрінеді және жұмыс істейді.</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow text-center">
+                        <div class="text-blue-600 mb-4 text-5xl"><i class="fas fa-search"></i></div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-3">SEO Оңтайландыру</h3>
+                        <p class="text-gray-600 leading-relaxed">Сайтыңыздың іздеу жүйелерінде (Google, Yandex) жоғары орындарға шығуына ықпал ететін базалық оңтайландыру.</p>
+                    </div>
+                </div>
+            </section>
+        
+            <section id="skills" class="py-16 md:py-24 my-12 bg-gray-100 rounded-xl shadow-lg">
+                <div class="max-w-5xl mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Қолданатын Технологияларым</h2>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-html5 text-5xl text-orange-500 mb-2"></i><p class="text-gray-700 font-medium">HTML5</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-css3-alt text-5xl text-blue-500 mb-2"></i><p class="text-gray-700 font-medium">CSS3</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-js-square text-5xl text-yellow-400 mb-2"></i><p class="text-gray-700 font-medium">JavaScript</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-react text-5xl text-sky-500 mb-2"></i><p class="text-gray-700 font-medium">React</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-vuejs text-5xl text-green-500 mb-2"></i><p class="text-gray-700 font-medium">Vue.js</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-node-js text-5xl text-green-600 mb-2"></i><p class="text-gray-700 font-medium">Node.js</p>
+                        </div>
+                         <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-php text-5xl text-indigo-500 mb-2"></i><p class="text-gray-700 font-medium">PHP</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-wordpress text-5xl text-blue-700 mb-2"></i><p class="text-gray-700 font-medium">WordPress</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fas fa-database text-5xl text-teal-500 mb-2"></i><p class="text-gray-700 font-medium">SQL/NoSQL</p>
+                        </div>
+                        <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                            <i class="fab fa-figma text-5xl text-purple-500 mb-2"></i><p class="text-gray-700 font-medium">Figma</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="projects" class="py-16 md:py-24 bg-white rounded-xl shadow-lg my-12">
+                <div class="max-w-5xl mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Менің Жұмыстарым (Мысалдар)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                                           
+                        
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
+                            <img src="C:\Users\azama\Desktop\Новая папка (2)/Tattim Brand тәттілер әлемі.png" alt="Tattim Brand" class="w-full h-48 object-cover bg-white">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-semibold text-pink-700 mb-2">Tattim Brand тәттілер әлемі</h3>
+                                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                    3 жылдан бері торттар, пирогтар, десерттер және тойларға арналған арнайы наборлар ұсынатын тәттілер дүкені. Қарағанды қаласы, Пруды 7/14. Әр ай сайын конкурстар мен тосынсыйлар өткізіледі.
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="https://tattimbrend.kz/" target="_blank" class="text-pink-600 hover:text-pink-800 font-medium transition-colors"><i class="fas fa-external-link-alt mr-1"></i> Сайтты көру</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
+                            <img src="C:\Users\azama\Desktop\Новая папка (2)/Наурызбек Есенгелді – Мобилограф.png" alt="Наурызбек Есенгелді – Мобилограф" class="w-full h-48 object-cover bg-white">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-semibold text-blue-700 mb-2">Наурызбек Есенгелді – Мобилограф</h3>
+                                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                    3 жылдық тәжірибесі бар мобилограф, соңғы 2 айда аэросъемкамен айналысады. Түрлі бизнес пен жеке брендтерге фото-видео қызмет көрсетеді.
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="https://nauryzmobilography.tilda.ws/" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium transition-colors"><i class="fas fa-external-link-alt mr-1"></i> Сайтты көру</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
+                            <img src="C:\Users\azama\Desktop\Новая папка (2)/11 Г сынып сайты.png" alt="11 Г сынып сайты" class="w-full h-48 object-cover bg-white">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-semibold text-green-700 mb-2">11 "Г" сынып сайты</h3>
+                                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                    Мектеп бітірушілерге арналған сайт. Сынып оқушылары, естеліктер мен байланыс ақпараты.
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="https://11gclass.tilda.ws/" target="_blank" class="text-green-600 hover:text-green-800 font-medium transition-colors"><i class="fas fa-external-link-alt mr-1"></i> Сайтты көру</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
+                            <img src="C:\Users\azama\Desktop\Новая папка (2)/Жанатбек ата – 70 жас фото галереясы.png" alt="Жанатбек ата 70 жас" class="w-full h-48 object-cover bg-white">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Жанатбек ата – 70 жас фото галереясы</h3>
+                                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                    Арнайы фото галерея, мерейтойға арналған фотокітап, холст және фотосуреттер. Сонымен қатар, фотограф ретінде жеке тапсырыстар қабылдаймын.
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="C:\Users\azama\Desktop\Новая папка (2)/" target="_blank" class="text-yellow-600 hover:text-yellow-800 font-medium transition-colors"><i class="fas fa-external-link-alt mr-1"></i> Сайтты көру</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
+                            <img src="C:\Users\azama\Desktop\Новая папка (2)/Айша – 1 жас туған күн және тұсау кесер.png" alt="Айша 1 жас туған күн және тұсау кесер" class="w-full h-48 object-cover bg-white">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-semibold text-pink-600 mb-2">Айша – 1 жас туған күн және тұсау кесер</h3>
+                                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                    Баланың туған күні мен тұсау кесеріне арналған фото галерея.
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="C:\Users\azama\Desktop\Новая папка (2)/" target="_blank" class="text-pink-600 hover:text-pink-800 font-medium transition-colors"><i class="fas fa-external-link-alt mr-1"></i> Сайтты көру</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
+                            <img src="C:\Users\azama\Desktop\Новая папка (2)/Fariza Travel – Туристік агенттік.png" alt="Fariza Travel – Туристік агенттік" class="w-full h-48 object-cover bg-white">
+                            <div class="p-6 flex flex-col flex-grow">
+                                <h3 class="text-2xl font-semibold text-blue-700 mb-2">Fariza Travel – Туристік агенттік</h3>
+                                <p class="text-gray-600 text-sm mb-4 flex-grow">
+                                    Түркияға турлар, толық бағдарлама, гид қызметі, трансфер, фотосессиялар және тағы басқа қызметтер.
+                                </p>
+                                <div class="mt-auto">
+                                    <a href="https://farizatravell.tilda.ws/" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium transition-colors"><i class="fas fa-external-link-alt mr-1"></i> Сайтты көру</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="faq" class="py-16 md:py-24 bg-gray-50 rounded-xl shadow-lg my-12">
+                <div class="max-w-4xl mx-auto px-6">
+                    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Жиі Қойылатын Сұрақтар</h2>
+                    <div>
+                        <div class="faq-item">
+                            <div class="faq-question">Сіз қандай платформада сайт жасайсыз?</div>
+                            <div class="faq-answer">
+                                Мен Tilda платформасында сайт жасаймын. Бұл платформа қазақ тілін толық қолдайды, жылдам және қолайлы. Сонымен қатар, Node.js арқылы да сайттар жасай аламын.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Сайт жасау қанша уақыт алады?</div>
+                            <div class="faq-answer">
+                                Сайттың күрделілігіне байланысты 3-7 күн аралығында. Лендинг беттер 3-4 күнде, ал көп бетті сайттар 5-7 күнде дайын болады.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Сайттың құны қанша?</div>
+                            <div class="faq-answer">
+                                Сайттың құны оның күрделілігіне, беттер санына және қосымша функцияларға байланысты. Лендинг беттер 50,000 тенгеден басталады, ал көп бетті сайттар 100,000 тенгеден басталады.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Домен және хостинг құны қанша?</div>
+                            <div class="faq-answer">
+                                Домен және хостинг құнын клиент өзі төлейді. Бұл шамамен жылына 15,000-20,000 тенге құрайды. Мен тек сайт жасау жұмысын орындаймын, ал домен мен хостингті клиент өзі таңдап, төлейді.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Сайтты өзгерту мүмкіндігі бар ма?</div>
+                            <div class="faq-answer">
+                                Иә, Tilda платформасында сайтты өзгерту өте оңай. Мен сізге сайтты басқаруды үйрете аламын, немесе өзгерістерді мен өзім жасай аламын.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Төлем қалай жүргізіледі?</div>
+                            <div class="faq-answer">
+                                Жұмыс 50% алдын ала төлем, 50% сайт дайын болғаннан кейін төленеді. Төлемді қолма-қол ақша немесе банк картасы арқылы жүргізуге болады.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Сайттың қазақ тілінде болуы мүмкін бе?</div>
+                            <div class="faq-answer">
+                                Иә, Tilda платформасы қазақ тілін толық қолдайды. Сайттың барлық мәтіні қазақ тілінде болады, сонымен қатар қазақ тілінде домен атын да таңдауға болады.
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <div class="faq-question">Сайттың мобильді нұсқасы бола ма?</div>
+                            <div class="faq-answer">
+                                Иә, Tilda арқылы жасалған барлық сайттар автоматты түрде мобильді құрылғыларға бейімделеді. Сайт смартфонда да, планшетте де, компьютерде де жақсы көрінеді.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ТЕГІН ГАЙД бөлімі -->
+            <section id="free-guide" class="py-12 md:py-20 flex justify-center">
+                <div id="free-guide-section" class="w-full max-w-2xl bg-gradient-to-r from-green-50 to-blue-50 border border-blue-200 rounded-2xl shadow-lg p-8 flex flex-col sm:flex-row items-center gap-6 fade-in hover-effect" style="overflow:hidden; position:relative;">
+                    <div class="flex-shrink-0 flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 animate-pulse">
+                        <svg width="44" height="44" fill="none" viewBox="0 0 24 24"><path fill="#2563eb" d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.83a2 2 0 0 0-.59-1.41l-4.83-4.83A2 2 0 0 0 13.17 2H6Zm6 1.41L18.59 10H14a2 2 0 0 1-2-2V3.41ZM6 4h6v4a4 4 0 0 0 4 4h4v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4Zm6 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>
+                    </div>
+                    <div class="flex-1 text-center sm:text-left">
+                        <h3 class="text-2xl font-bold text-blue-700 mb-2 animate-text">ТЕГІН ГАЙД: 2025 жылы сайтсыз бизнес жүргізудің 5 ҚАТЕРІ</h3>
+                        <p class="text-base text-gray-700 mb-3">Сайтсыз бизнес жүргізу – үлкен тәуекел! Бұл гайдта сіз 2025 жылы сайтсыз қалудың ең басты 5 қаупін және олардан қалай сақтану жолдарын білесіз. Өз бизнесіңізді қорғап, дамытыңыз!</p>
+                        <a id="download-guide-btn" href="ТЕГІН ГАЙД.pdf" download class="inline-block bg-blue-600 text-white px-7 py-3 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition btn-animate mt-2"><i class="fas fa-file-pdf mr-2"></i>Тегін жүктеу</a>
+                    </div>
+                    <div id="confetti-holder" style="position:absolute; left:0; top:0; width:100%; height:100%; pointer-events:none; z-index:10;"></div>
+                </div>
+            </section>
+
+            <section id="contact" class="py-16 md:py-24 my-12">
+                <div class="max-w-3xl mx-auto px-6 text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Хабарласыңыз!</h2>
+                    <p class="text-lg text-gray-700 mb-10 leading-relaxed">
+                        Сіздің жобаңызды талқылауға немесе сұрақтарыңызға жауап беруге әрқашан дайынмын. Маған хабарласып, тегін кеңес алыңыз!
+                    </p>
+                    <a href="https://wa.me/77476139422" class="inline-block bg-green-600 text-white text-lg font-semibold px-10 py-4 rounded-lg hover:bg-green-700 transition-transform transform hover:scale-105 shadow-md mb-10">
+                        <i class="fab fa-whatsapp mr-2"></i> WhatsApp арқылы жазу
+                    </a>
+                    <div class="flex justify-center space-x-8">
+                        <div class="flex space-x-6 justify-center md:justify-start mt-6">
+                            <a href="https://telegram.me/code_improper" target="_blank" class="text-gray-600 hover:text-blue-500 transition-colors text-3xl" aria-label="Telegram Profile">
+                                <i class="fab fa-telegram"></i>
+                            </a>
+                            <a href="https://www.instagram.com/a.perdeev/" target="_blank" class="text-gray-600 hover:text-pink-600 transition-colors text-3xl" aria-label="Instagram Profile">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 mt-4">Email: <a href="mailto:azamaperdeev05@gmail.com" class="text-blue-600 hover:underline">azamaperdeev05@gmail.com</a></p>
+                    <p class="text-gray-600 mt-8">Немесе телефон арқылы: <a href="tel:+77478501822" class="text-blue-600 hover:underline">+7 (747) 850-18-22</a><br><a href="tel:+77476139422" class="text-blue-600 hover:underline">+7 (747) 613-94-22</a></p>
+                </div>
+            </section>
+
+        </main>
+    <footer class="bg-gray-800 text-gray-300 py-8 text-center">
+        <div class="container mx-auto px-6">
+            <p>&copy; <span id="currentYear"></span> Пердеев Азамат. Барлық құқықтар қорғалған.</p>
+            <p class="text-sm mt-1">Azamat Perdeev көмегімен жасалған <i class="fas fa-heart text-red-500"></i>.</p>
+            <p class="text-xs mt-2">Қарағанды, Қазақстан <i class="fas fa-map-marker-alt ml-1"></i></p>
+        </div>
+    </footer>
+
+    <script>
+        // Мобильді мәзірді жақсартылған JavaScript
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('active');
+            const icon = mobileMenuButton.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+            
+            // Мәзір ашылғанда бетті айналдыруды болдырмау
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+
+        // Мобильді мәзір элементіне түскенде мәзірді жабу
+        const mobileNavItems = document.querySelectorAll('.nav-item-mobile');
+        mobileNavItems.forEach(item => {
+            item.addEventListener('click', () => {
+                if (mobileMenu.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+
+        // Мобильді құрылғыларда анимацияларды оңтайландыру
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion) {
+            document.querySelectorAll('.fade-in, .parallax, .hover-effect, .animate-text').forEach(element => {
+                element.style.transition = 'none';
+                element.style.animation = 'none';
+            });
+        }
+
+        // Төменгі деректемедегі ағымдағы жылды жаңарту
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Айналдыру позициясына байланысты белсенді навигация сілтемесін бөлектеу
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('nav a.nav-item, #mobile-menu a.nav-item-mobile');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3 - 70)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('nav-link-active', 'text-blue-600', 'font-semibold');
+                link.classList.add('text-gray-600');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('nav-link-active', 'text-blue-600', 'font-semibold');
+                    link.classList.remove('text-gray-600');
+                }
+            });
+        });
+
+        // WhatsApp виджеті және хабарлама
+        document.addEventListener('DOMContentLoaded', () => {
+            const whatsappWidget = document.getElementById('whatsapp-widget');
+            const notification = document.getElementById('whatsapp-notification');
+            const closeNotification = document.querySelector('.notification-close');
+
+            // 10 секундтан кейін хабарламаны көрсету
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10000);
+
+            // 11 секундтан кейін виджетті көрсету
+            setTimeout(() => {
+                whatsappWidget.classList.add('show');
+            }, 11000);
+
+            // Хабарламаны жабу батырмасы
+            closeNotification.addEventListener('click', () => {
+                notification.classList.remove('show');
+            });
+
+            // Хабарламаға басқанда виджетке өту
+            notification.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('notification-close')) {
+                    window.open('https://wa.me/77476139422', '_blank');
+                }
+            });
+        });
+    </script>
+
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 900,
+            once: true,
+        });
+    </script>
+
+    <div id="whatsapp-notification">
+        <span class="notification-close">&times;</span>
+        <p class="text-gray-800 text-sm">Сәлеметсіз бе! Сізге қалай көмектесе аламын? WhatsApp арқылы хабарласыңыз 😊</p>
+    </div>
+
+    <a href="https://wa.me/77476139422" target="_blank" id="whatsapp-widget" aria-label="WhatsApp-қа жазу">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" />
+    </a>
+
+    <script>
+    // Анимацияларды басқару
+    document.addEventListener('DOMContentLoaded', () => {
+        // Элементтерге анимация класстарын қосу
+        const heroImage = document.querySelector('.md:w-1/2 img');
+        if (heroImage) {
+            heroImage.classList.add('animate-float');
+        }
+
+        // Жобалар карточкаларына анимация
+        const projectCards = document.querySelectorAll('.bg-gray-50.rounded-xl');
+        projectCards.forEach((card, index) => {
+            card.classList.add('card-hover');
+            
+            // Көріну анимациясын қосу
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add(index % 2 === 0 ? 'slide-in-left' : 'slide-in-right');
+                        }, index * 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2 });
+            
+            observer.observe(card);
+        });
+
+        // Батырмаларға анимация
+        const buttons = document.querySelectorAll('a[href^="#"]');
+        buttons.forEach(button => {
+            button.classList.add('btn-animate');
+        });
+
+        // Тақырыптарға градиент эффект
+        const headings = document.querySelectorAll('h2');
+        headings.forEach(heading => {
+            heading.classList.add('text-gradient');
+        });
+
+        // Скролл анимациясы
+        const smoothScroll = (target) => {
+            const element = document.querySelector(target);
+            if (element) {
+                window.scrollTo({
+                    top: element.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        };
+
+        // Сілтемелерге скролл анимациясын қосу
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                smoothScroll(this.getAttribute('href'));
+            });
+        });
+    });
+
+    // Параллакс эффект
+    window.addEventListener('scroll', () => {
+        const parallaxElements = document.querySelectorAll('.parallax');
+        parallaxElements.forEach(element => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            element.style.transform = `translate3d(0, ${rate}px, 0)`;
+        });
+    });
+
+    // FAQ бөлімінің JavaScript коды
+    document.addEventListener('DOMContentLoaded', () => {
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Басқа ашық сұрақтарды жабу
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Ағымдағы сұрақты ашу/жабу
+                item.classList.toggle('active');
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>
+
