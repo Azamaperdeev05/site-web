@@ -616,16 +616,36 @@
 
         /* Навигация стилін түзету */
         @media (max-width: 768px) {
-            nav {
+            /* Мобильді телефонда SVG элементтерді жасыру */
+            .bg-abstract, svg.absolute {
+                display: none !important;
+            }
+            
+            /* Үстіңгі панель навигация реттеу */
+            header nav {
                 display: flex !important;
                 justify-content: space-between !important;
                 align-items: center !important;
                 padding: 0.75rem 1rem !important;
+                width: 100% !important;
             }
+            
+            /* Логотипті сол жаққа орналастыру */
+            header nav a.text-xl, header nav a.text-2xl {
+                text-align: left !important;
+                margin-right: auto !important;
+                font-size: 1.25rem !important;
+            }
+            
+            /* Гамбургер мәзірді оң жаққа орналастыру */
             #mobile-menu-button {
-                position: absolute !important;
-                right: 1.25rem !important;
-                top: 1.25rem !important;
+                margin-left: auto !important;
+                padding: 0.5rem !important;
+            }
+            
+            /* Мәзір ашылғанда дұрыс көрсету */
+            #mobile-menu {
+                top: 60px !important;
             }
         }
     </style>
