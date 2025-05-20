@@ -13,9 +13,10 @@
         /* Негізгі стильдер */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; /* Ашық сұр фон */
-            color: #1f2937; /* Қою сұр мәтін */
-            overflow-x: hidden; /* Көлденең айналдыруды болдырмау */
+            background: linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 100%);
+            color: #1f2937;
+            overflow-x: hidden;
+            position: relative;
         }
         /* Anchor сілтемелері үшін бірқалыпты айналдыру */
         html {
@@ -331,6 +332,55 @@
             padding: 0 24px 18px 24px;
             background: #f0f7ff;
         }
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid #3b82f6;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .05em;
+            animation: typing 2.5s steps(30, end), blink-caret .75s step-end infinite;
+        }
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #3b82f6; }
+        }
+        .cta-btn {
+            box-shadow: 0 8px 24px rgba(59,130,246,0.15), 0 1.5px 4px rgba(16,185,129,0.10);
+            letter-spacing: 0.03em;
+            font-size: 1.25rem;
+            font-weight: 700;
+            border: none;
+        }
+        .cta-btn:active {
+            transform: scale(0.97);
+        }
+        @keyframes fade-in {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in { animation: fade-in 0.3s ease; }
+        .bg-abstract {
+            position: absolute;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .animate-spin-logo {
+          animation: spin 1.2s linear infinite;
+        }
+        @keyframes spin {
+          100% { transform: rotate(360deg); }
+        }
+        #preloader {
+          transition: opacity 0.5s;
+        }
+        #preloader.hide {
+          opacity: 0;
+          pointer-events: none;
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -360,20 +410,28 @@
 
     <main class="container mx-auto px-4 sm:px-6 py-8">
 
-        <section id="hero" class="min-h-[calc(100vh-120px)] flex flex-col md:flex-row items-center justify-center py-12 md:py-20 text-center md:text-left">
-            <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10 fade-in">
-                <h1 class="text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-800 mb-4 leading-tight animate-text">
+        <!-- Hero секциясының астына SVG толқын -->
+        <div class="w-full relative" style="height: 60px; margin-bottom: -60px; z-index:1;">
+          <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" class="absolute left-0 top-0 w-full h-full">
+            <path d="M0,30 C360,90 1080,0 1440,60 L1440,60 L0,60 Z" fill="#a5b4fc" fill-opacity="0.25"/>
+            <path d="M0,40 C400,0 1040,80 1440,20 L1440,60 L0,60 Z" fill="#6ee7b7" fill-opacity="0.18"/>
+          </svg>
+        </div>
+
+        <section id="hero" class="min-h-[calc(100vh-120px)] flex flex-col md:flex-row items-center justify-center py-12 md:py-20 text-center md:text-left fade-in" data-aos="fade-up">
+            <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10">
+                <h1 class="typewriter text-3xl sm:text-4xl md:text-6xl font-extrabold text-gray-800 mb-4 leading-tight">
                     Кәсіби Веб-сайттар<br>Сіздің Бизнесіңіз Үшін
                 </h1>
                 <p class="text-base sm:text-lg md:text-2xl text-gray-600 mb-6 fade-in">
                     Мен заманауи, жылдам жүктелетін және сатуға бағытталған веб-сайттар жасаймын. Сіздің идеяңызды жүзеге асырайық!
                 </p>
                 <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                    <a href="#projects" class="w-full sm:w-auto inline-block bg-blue-600 text-white text-base sm:text-lg font-semibold px-6 sm:px-8 py-3 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 shadow-md hover-effect">Менің Жобаларым</a>
-                    <a href="#contact" class="w-full sm:w-auto inline-block bg-gray-700 text-white text-base sm:text-lg font-semibold px-6 sm:px-8 py-3 rounded-lg hover:bg-gray-800 transition-transform transform hover:scale-105 shadow-md hover-effect">Тегін Кеңес Алу</a>
+                    <a href="#projects" class="w-full sm:w-auto inline-block bg-blue-600 text-white text-base sm:text-lg font-semibold px-6 sm:px-8 py-3 rounded-lg hover:bg-blue-700 transition-transform transform hover:scale-105 shadow-md btn-animate">Менің Жобаларым</a>
+                    <a href="#contact" class="w-full sm:w-auto inline-block bg-gray-700 text-white text-base sm:text-lg font-semibold px-6 sm:px-8 py-3 rounded-lg hover:bg-gray-800 transition-transform transform hover:scale-105 shadow-md btn-animate">Тегін Кеңес Алу</a>
                 </div>
             </div>
-            <div class="md:w-1/2 flex justify-center mt-8 md:mt-0 parallax" data-speed="0.3">
+            <div class="md:w-1/2 flex justify-center mt-8 md:mt-0 parallax animate-float" data-speed="0.3">
                 <img src="images/сайт үлгі.png" alt="Веб-сайт жасаушы" class="rounded-lg shadow-2xl w-full max-w-[300px] sm:max-w-md object-cover border-4 border-white hover-effect">
             </div>
         </section>
@@ -392,7 +450,7 @@
             </div>
         </section>
 
-        <section id="about" class="py-16 md:py-24 bg-white rounded-xl shadow-lg my-12 fade-in">
+        <section id="about" class="py-16 md:py-24 bg-white rounded-xl shadow-lg my-12 fade-in" data-aos="fade-up">
             <div class="max-w-4xl mx-auto px-6">
                 <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12 animate-text">Мен Туралы</h2>
                 <div class="text-lg text-gray-700 space-y-6 leading-relaxed text-center md:text-left">
@@ -409,7 +467,7 @@
             </div>
         </section>
 
-        <section id="services" class="py-16 md:py-24">
+        <section id="services" class="py-16 md:py-24 fade-in" data-aos="fade-up">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Менің Қызметтерім</h2>
             <p class="text-xl text-center text-gray-600 mb-12">Tilda арқылы немесе Node.js арқылы кез келген сайтты сіз қалаған бойынша жасаймыз. Кез келген бизнес немесе жеке бренд үшін де қызмет көрсетеміз.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -446,7 +504,7 @@
                 </div>
             </section>
         
-            <section id="skills" class="py-16 md:py-24 my-12 bg-gray-100 rounded-xl shadow-lg">
+            <section id="skills" class="py-16 md:py-24 my-12 bg-gray-100 rounded-xl shadow-lg fade-in" data-aos="fade-up">
                 <div class="max-w-5xl mx-auto px-6">
                     <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Қолданатын Технологияларым</h2>
                     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 text-center">
@@ -484,14 +542,18 @@
                 </div>
             </section>
 
-            <section id="projects" class="py-16 md:py-24 bg-white rounded-xl shadow-lg my-12">
+            <section id="projects" class="py-16 md:py-24 bg-white rounded-xl shadow-lg my-12 fade-in" data-aos="fade-up">
                 <div class="max-w-5xl mx-auto px-6">
                     <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-16">Менің Жұмыстарым (Мысалдар)</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                                            
                         
-                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
-                            <img src="images/Tattim Brand тәттілер әлемі.png" alt="Tattim Brand" class="w-full h-48 object-cover bg-white">
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col project-card" 
+                            data-title="Tattim Brand тәттілер әлемі" 
+                            data-desc="3 жылдан бері торттар, пирогтар, десерттер және тойларға арналған арнайы наборлар ұсынатын тәттілер дүкені. Қарағанды қаласы, Пруды 7/14. Әр ай сайын конкурстар мен тосынсыйлар өткізіледі." 
+                            data-img="images/Tattim Brand тәттілер әлемі.png" 
+                            data-link="https://tattimbrend.kz/">
+                            <img src="images/Tattim Brand тәттілер әлемі.png" alt="Tattim Brand" class="w-full h-48 object-cover bg-white lightbox-img">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-semibold text-pink-700 mb-2">Tattim Brand тәттілер әлемі</h3>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">
@@ -502,8 +564,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
-                            <img src="images/Наурызбек Есенгелді – Мобилограф.png" alt="Наурызбек Есенгелді – Мобилограф" class="w-full h-48 object-cover bg-white">
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col project-card" 
+                            data-title="Наурызбек Есенгелді – Мобилограф" 
+                            data-desc="3 жылдық тәжірибесі бар мобилограф, соңғы 2 айда аэросъемкамен айналысады. Түрлі бизнес пен жеке брендтерге фото-видео қызмет көрсетеді." 
+                            data-img="images/Наурызбек Есенгелді – Мобилограф.png" 
+                            data-link="https://nauryzmobilography.tilda.ws/">
+                            <img src="images/Наурызбек Есенгелді – Мобилограф.png" alt="Наурызбек Есенгелді – Мобилограф" class="w-full h-48 object-cover bg-white lightbox-img">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-semibold text-blue-700 mb-2">Наурызбек Есенгелді – Мобилограф</h3>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">
@@ -514,8 +580,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
-                            <img src="images/11 Г сынып сайты.png" alt="11 Г сынып сайты" class="w-full h-48 object-cover bg-white">
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col project-card" 
+                            data-title="11 Г сынып сайты" 
+                            data-desc="Мектеп бітірушілерге арналған сайт. Сынып оқушылары, естеліктер мен байланыс ақпараты." 
+                            data-img="images/11 Г сынып сайты.png" 
+                            data-link="https://11gclass.tilda.ws/">
+                            <img src="images/11 Г сынып сайты.png" alt="11 Г сынып сайты" class="w-full h-48 object-cover bg-white lightbox-img">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-semibold text-green-700 mb-2">11 "Г" сынып сайты</h3>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">
@@ -526,8 +596,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
-                            <img src="images/Жанатбек ата – 70 жас фото галереясы.png" alt="Жанатбек ата 70 жас" class="w-full h-48 object-cover bg-white">
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col project-card" 
+                            data-title="Жанатбек ата – 70 жас фото галереясы" 
+                            data-desc="Арнайы фото галерея, мерейтойға арналған фотокітап, холст және фотосуреттер. Сонымен қатар, фотограф ретінде жеке тапсырыстар қабылдаймын." 
+                            data-img="images/Жанатбек ата – 70 жас фото галереясы.png" 
+                            data-link="images/">
+                            <img src="images/Жанатбек ата – 70 жас фото галереясы.png" alt="Жанатбек ата 70 жас" class="w-full h-48 object-cover bg-white lightbox-img">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-semibold text-yellow-700 mb-2">Жанатбек ата – 70 жас фото галереясы</h3>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">
@@ -538,8 +612,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
-                            <img src="images/Айша – 1 жас туған күн және тұсау кесер.png" alt="Айша 1 жас туған күн және тұсау кесер" class="w-full h-48 object-cover bg-white">
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col project-card" 
+                            data-title="Айша – 1 жас туған күн және тұсау кесер" 
+                            data-desc="Баланың туған күні мен тұсау кесеріне арналған фото галерея." 
+                            data-img="images/Айша – 1 жас туған күн және тұсау кесер.png" 
+                            data-link="images/">
+                            <img src="images/Айша – 1 жас туған күн және тұсау кесер.png" alt="Айша 1 жас туған күн және тұсау кесер" class="w-full h-48 object-cover bg-white lightbox-img">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-semibold text-pink-600 mb-2">Айша – 1 жас туған күн және тұсау кесер</h3>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">
@@ -550,8 +628,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col" data-aos="fade-up">
-                            <img src="images/Fariza Travel – Туристік агенттік.png" alt="Fariza Travel – Туристіk агенттіk" class="w-full h-48 object-cover bg-white">
+                        <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col project-card" 
+                            data-title="Fariza Travel – Туристіk агенттіk" 
+                            data-desc="Түркияға турлар, толық бағдарлама, гид қызметі, трансфер, фотосессиялар және тағы басқа қызметтер." 
+                            data-img="images/Fariza Travel – Туристіk агенттіk.png" 
+                            data-link="https://farizatravell.tilda.ws/">
+                            <img src="images/Fariza Travel – Туристіk агенттіk.png" alt="Fariza Travel – Туристіk агенттіk" class="w-full h-48 object-cover bg-white lightbox-img">
                             <div class="p-6 flex flex-col flex-grow">
                                 <h3 class="text-2xl font-semibold text-blue-700 mb-2">Fariza Travel – Туристіk агенттіk</h3>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">
@@ -566,7 +648,7 @@
                 </div>
             </section>
 
-            <section id="faq" class="py-16 md:py-24 bg-gray-50 rounded-xl shadow-lg my-12">
+            <section id="faq" class="py-16 md:py-24 bg-gray-50 rounded-xl shadow-lg my-12 fade-in" data-aos="fade-up">
                 <div class="max-w-4xl mx-auto px-6">
                     <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-12">Жиі Қойылатын Сұрақтар</h2>
                     <div>
@@ -623,8 +705,8 @@
             </section>
 
             <!-- ТЕГІН ГАЙД бөлімі -->
-            <section id="free-guide" class="py-12 md:py-20 flex justify-center">
-                <div id="free-guide-section" class="w-full max-w-2xl bg-gradient-to-r from-green-50 to-blue-50 border border-blue-200 rounded-2xl shadow-lg p-8 flex flex-col sm:flex-row items-center gap-6 fade-in hover-effect" style="overflow:hidden; position:relative;">
+            <section id="free-guide" class="py-12 md:py-20 flex justify-center fade-in" data-aos="fade-up">
+                <div id="free-guide-section" class="w-full max-w-2xl bg-gradient-to-r from-green-50 to-blue-50 border border-blue-200 rounded-2xl shadow-lg p-8 flex flex-col sm:flex-row items-center gap-6">
                     <div class="flex-shrink-0 flex items-center justify-center w-20 h-20 rounded-full bg-blue-100 animate-pulse">
                         <svg width="44" height="44" fill="none" viewBox="0 0 24 24"><path fill="#2563eb" d="M6 2a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.83a2 2 0 0 0-.59-1.41l-4.83-4.83A2 2 0 0 0 13.17 2H6Zm6 1.41L18.59 10H14a2 2 0 0 1-2-2V3.41ZM6 4h6v4a4 4 0 0 0 4 4h4v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4Zm6 12a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"/></svg>
                     </div>
@@ -637,7 +719,7 @@
                 </div>
             </section>
 
-            <section id="contact" class="py-16 md:py-24 my-12">
+            <section id="contact" class="py-16 md:py-24 my-12 fade-in" data-aos="fade-up">
                 <div class="max-w-3xl mx-auto px-6 text-center">
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-8">Хабарласыңыз!</h2>
                     <p class="text-lg text-gray-700 mb-10 leading-relaxed">
@@ -873,6 +955,108 @@
         });
     });
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('a, button').forEach(el => {
+            if (!el.classList.contains('btn-animate')) {
+                el.classList.add('btn-animate');
+            }
+        });
+    });
+    </script>
+
+    <!-- Modal терезе (жасырын) -->
+    <div id="project-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-lg w-full p-8 relative animate-fade-in">
+            <button id="modal-close" class="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl font-bold">&times;</button>
+            <img id="modal-image" src="" alt="Жоба суреті" class="w-full h-64 object-cover rounded-xl mb-4 cursor-zoom-in">
+            <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
+            <p id="modal-desc" class="text-gray-700 mb-4"></p>
+            <a id="modal-link" href="#" target="_blank" class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-blue-700 transition btn-animate">Сайтқа өту</a>
+        </div>
+    </div>
+
+    <!-- Lightbox (үлкейту) үшін бөлек div -->
+    <div id="lightbox" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 hidden">
+        <img id="lightbox-img" src="" alt="Үлкейтілген сурет" class="max-h-[80vh] max-w-[90vw] rounded-xl shadow-2xl">
+    </div>
+
+    <!-- Modal және Lightbox функционалы (JS) -->
+    <script>
+    // Modal ашу
+    const modal = document.getElementById('project-modal');
+    const modalImg = document.getElementById('modal-image');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalLink = document.getElementById('modal-link');
+    const modalClose = document.getElementById('modal-close');
+
+    document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', () => {
+            modalImg.src = card.getAttribute('data-img');
+            modalTitle.textContent = card.getAttribute('data-title');
+            modalDesc.textContent = card.getAttribute('data-desc');
+            modalLink.href = card.getAttribute('data-link');
+            modal.classList.remove('hidden');
+        });
+    });
+    modalClose.addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', e => { if(e.target === modal) modal.classList.add('hidden'); });
+
+    // Lightbox ашу
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.lightbox-img').forEach(img => {
+        img.addEventListener('click', e => {
+            e.stopPropagation();
+            lightboxImg.src = img.src;
+            lightbox.classList.remove('hidden');
+        });
+    });
+    lightbox.addEventListener('click', () => lightbox.classList.add('hidden'));
+    </script>
+
+    <!-- Бүкіл сайтқа SVG абстрактілі фигуралар -->
+    <svg class="bg-abstract" width="220" height="220" style="top:40px; left:-60px;" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="110" cy="110" r="100" fill="#a5b4fc" fill-opacity="0.12"/>
+      <circle cx="60" cy="60" r="40" fill="#6ee7b7" fill-opacity="0.10"/>
+    </svg>
+    <svg class="bg-abstract" width="160" height="160" style="bottom:60px; right:-40px;" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="30" y="30" width="100" height="100" rx="30" fill="#f472b6" fill-opacity="0.10"/>
+      <circle cx="80" cy="80" r="60" fill="#facc15" fill-opacity="0.08"/>
+    </svg>
+
+    <!-- Hero секциясына ерекше иконка/иллюстрация -->
+    <div class="absolute left-8 top-24 z-10 hidden md:block">
+      <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="8" width="48" height="48" rx="12" fill="#3b82f6" fill-opacity="0.18"/>
+        <path d="M20 32h24M32 20v24" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <!-- WhatsApp және Telegram қалқып тұратын чат-виджеттері -->
+    <div id="chat-widgets" class="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+      <a href="https://wa.me/77476139422" target="_blank" aria-label="WhatsApp-қа жазу" class="w-14 h-14 rounded-full bg-green-500 shadow-lg flex items-center justify-center hover:bg-green-600 transition-transform transform hover:scale-110">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" class="w-8 h-8">
+      </a>
+      <a href="https://t.me/code_improper" target="_blank" aria-label="Telegram-ға жазу" class="w-14 h-14 rounded-full bg-blue-500 shadow-lg flex items-center justify-center hover:bg-blue-600 transition-transform transform hover:scale-110">
+        <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram" class="w-8 h-8">
+      </a>
+    </div>
+
+    <!-- Preloader (жүктеу анимациясы) -->
+    <div id="preloader" class="fixed inset-0 bg-white flex flex-col items-center justify-center z-[9999]">
+      <div class="animate-spin-logo mb-4">
+        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="28" stroke="#3b82f6" stroke-width="6" fill="none" opacity="0.15"/>
+          <path d="M32 8a24 24 0 1 1-17 7" stroke="#3b82f6" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <rect x="20" y="20" width="24" height="24" rx="8" fill="#3b82f6" fill-opacity="0.18"/>
+          <path d="M32 24v16M24 32h16" stroke="#3b82f6" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="text-blue-700 font-bold text-lg tracking-wide">Сайт жүктелуде...</div>
+    </div>
 
 </body>
 </html>
