@@ -109,10 +109,10 @@
             .rounded-xl, .rounded-2xl {
                 border-radius: 12px !important;
             }
-            .w-full, .max-w-md, .max-w-[300px], .max-w-[90vw] {
+            .w-full, .max-w-md, .max-w-\[300px\], .max-w-\[90vw\] {
                 max-width: 98vw !important;
             }
-            .h-48, .h-64, .max-h-[80vh] {
+            .h-48, .h-64, .max-h-\[80vh\] {
                 height: auto !important;
                 max-height: 40vw !important;
             }
@@ -655,9 +655,6 @@
     <header class="bg-white/80 backdrop-blur-md shadow-md sticky top-0 z-50 w-full">
       <div class="flex justify-between items-center w-full px-4 py-3">
         <a href="#" class="text-xl font-bold text-blue-600">Пердеев Азамат</a>
-        <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none p-2">
-          <i class="fas fa-bars text-2xl"></i>
-        </button>
       </div>
     </header>
 
@@ -883,13 +880,13 @@
                             </div>
                         </div>
                         <div class="bg-gray-50 rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col project-card" 
-                            data-title="Fariza Travel – Туристіk агенттіk" 
+                            data-title="Fariza Travel – Туристік агенттік" 
                             data-desc="Түркияға турлар, толық бағдарлама, гид қызметі, трансфер, фотосессиялар және тағы басқа қызметтер." 
                             data-img="images/Fariza Travel – Туристік агенттік.png" 
                             data-link="https://farizatravell.tilda.ws/">
-                            <img src="images/Fariza Travel – Туристік агенттік.png" alt="Fariza Travel – Туристіk агенттіk" class="w-full h-48 object-cover bg-white lightbox-img">
+                            <img src="images/Fariza Travel – Туристік агенттік.png" alt="Fariza Travel – Туристік агенттік" class="w-full h-48 object-cover bg-white lightbox-img">
                             <div class="p-6 flex flex-col flex-grow">
-                                <h3 class="text-2xl font-semibold text-blue-700 mb-2">Fariza Travel – Туристіk агенттіk</h3>
+                                <h3 class="text-2xl font-semibold text-blue-700 mb-2">Fariza Travel – Туристік агенттік</h3>
                                 <p class="text-gray-600 text-sm mb-4 flex-grow">
                                     Түркияға турлар, толық бағдарлама, гид қызметі, трансфер, фотосессиялар және тағы басқа қызметтер.
                                 </p>
@@ -1015,28 +1012,30 @@
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         
-        function toggleMobileMenu() {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenu.classList.toggle('active');
-            const icon = mobileMenuButton.querySelector('i');
-            icon.classList.toggle('fa-bars');
-            icon.classList.toggle('fa-times');
-            
-            // Мәзір ашылғанда бетті айналдыруды болдырмау
-            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        }
+        if (mobileMenuButton && mobileMenu) {
+            function toggleMobileMenu() {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('active');
+                const icon = mobileMenuButton.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+                
+                // Мәзір ашылғанда бетті айналдыруды болдырмау
+                document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+            }
 
-        mobileMenuButton.addEventListener('click', toggleMobileMenu);
+            mobileMenuButton.addEventListener('click', toggleMobileMenu);
 
-        // Мобильді мәзір элементіне түскенде мәзірді жабу
-        const mobileNavItems = document.querySelectorAll('.nav-item-mobile');
-        mobileNavItems.forEach(item => {
-            item.addEventListener('click', () => {
-                if (mobileMenu.classList.contains('active')) {
-                    toggleMobileMenu();
-                }
+            // Мобильді мәзір элементіне түскенде мәзірді жабу
+            const mobileNavItems = document.querySelectorAll('.nav-item-mobile');
+            mobileNavItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    if (mobileMenu.classList.contains('active')) {
+                        toggleMobileMenu();
+                    }
+                });
             });
-        });
+        }
 
         // Мобильді құрылғыларда анимацияларды оңтайландыру
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
