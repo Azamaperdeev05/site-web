@@ -429,6 +429,112 @@
           opacity: 0;
           pointer-events: none;
         }
+        /* Мобильді құрылғыларға бейімдеу */
+        @media screen and (max-width: 768px) {
+            /* Hero секциясы */
+            #hero {
+                padding: 2rem 1rem;
+                text-align: center;
+            }
+            #hero h1 {
+                font-size: 2rem;
+                line-height: 1.3;
+                margin-bottom: 1rem;
+            }
+            #hero p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+            #hero img {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+
+            /* Қызметтер секциясы */
+            #services .grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+            #services .text-2xl {
+                font-size: 1.5rem;
+            }
+
+            /* Жобалар секциясы */
+            #projects .grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1rem;
+            }
+            .project-card {
+                margin-bottom: 1.5rem;
+            }
+            .project-card img {
+                height: 200px;
+                object-fit: cover;
+            }
+
+            /* FAQ секциясы */
+            .faq-question {
+                font-size: 1.1rem;
+                padding: 1rem;
+            }
+            .faq-answer {
+                padding: 0 1rem 1rem 1rem;
+            }
+
+            /* Байланыс секциясы */
+            #contact {
+                padding: 2rem 1rem;
+            }
+            #contact .text-3xl {
+                font-size: 1.8rem;
+            }
+
+            /* Жалпы стильдер */
+            .container {
+                padding: 0 1rem;
+            }
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            .btn {
+                width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            /* Суреттер */
+            .object-cover {
+                height: 200px;
+            }
+            
+            /* Мәзір */
+            .nav-item-mobile {
+                padding: 1rem;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Кішкентай экрандар үшін қосымша бейімдеу */
+        @media screen and (max-width: 480px) {
+            #hero h1 {
+                font-size: 1.8rem;
+            }
+            .text-2xl {
+                font-size: 1.3rem;
+            }
+            .text-xl {
+                font-size: 1.1rem;
+            }
+            .p-6 {
+                padding: 1rem;
+            }
+            .m-6 {
+                margin: 1rem;
+            }
+        }
     </style>
 </head>
 <body class="antialiased">
