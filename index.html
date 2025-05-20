@@ -1058,6 +1058,23 @@
       <div class="text-blue-700 font-bold text-lg tracking-wide">Сайт жүктелуде...</div>
     </div>
 
+    <script>
+    // Preloader тек сайт толық жүктелгенде ғана жоғалады
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      preloader.classList.add('hide');
+      setTimeout(() => preloader.style.display = 'none', 600);
+    });
+    // Егер қандай да бір себеппен load шақырылмаса, 5 секундтан кейін preloader-ді жасыру
+    setTimeout(() => {
+      const preloader = document.getElementById('preloader');
+      if (preloader && !preloader.classList.contains('hide')) {
+        preloader.classList.add('hide');
+        setTimeout(() => preloader.style.display = 'none', 600);
+      }
+    }, 5000);
+    </script>
+
 </body>
 </html>
 
